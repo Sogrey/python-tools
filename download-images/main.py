@@ -168,11 +168,11 @@ def process_getGroupList(url,encoding):
     p.join()
     return
 
-group = 'https://www.3c3a6.com/tupian/list-2.html'
+group = 'https://www.xxxxx.com/tupian/list-2.html'
 
 urls = [
-    # 'https://www.3c3a6.com/tupian/126069.html',
-    'https://www.3c3a6.com/tupian/126068.html',
+    # 'https://www.xxxxx.com/tupian/126069.html',
+    'https://www.xxxxx.com/tupian/126068.html',
 ]
 
 if __name__ == "__main__":

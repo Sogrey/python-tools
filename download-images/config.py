@@ -14,7 +14,7 @@ BaseConfig = {
 }
 
 Config = {
-    'https://www.3c3a6.com/':{
+    'https://www.xxxxx.com/':{
         'menuList':'.list ul li a', # 目录css选择器
         'menuUrlIsFull': False,  # 目录页各章节url是否是全路径，不是则按照根域名相对路径
         'title':'title',

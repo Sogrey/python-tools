@@ -1,4 +1,3 @@
-import urllib.request
 import sys
 import re
 import os
@@ -10,36 +9,7 @@ from bs4 import BeautifulSoup
 from config import Config, OutputDir
 from utils import getWebHost, removeN, trim
 
-def get_html(url):
-    page = urllib.request.urlopen(url)
-    html_a = page.read()
-    return html_a.decode('utf-8')
-
-def get_img(html):
-    atlasName = ''
-    reg = r'https://[^\s]*?\.jpg'
-    imgre = re.compile(reg)  # 转换成一个正则对象
-    imglist = imgre.findall(html)  # 表示在整个网页过滤出所有图片的地址，放在imgList中
-    x = 0        # 声明一个变量赋值
-    this_output =  OutputDir+atlasName  # 设置图片的保存地址
-    if not os.path.isdir(this_output):
-        os.makedirs(this_output)  # 判断没有此路径则创建
-    paths = this_output + '\\'  # 保存在test路径下
-    for imgurl in imglist:
-        imgFileName = '{0}{1}.jpg'.format(paths, x)
-        urllib.request.urlretrieve(imgurl, imgFileName)  # 打开imgList,下载图片到本地
-        x = x+1
-    #     print(imgFileName)
-    #     print('图片开始下载，注意查看文件夹')
-    # return imglist
-
-
-
 def thread_getOneHtml(url, encoding):
-    # html_b = get_html(url)  # 获取该网页的详细信息
-    # print(html_b.title())
-    # print(get_img(html_b))  # 从网页源代码中分析下载保存图片
-
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.140 Safari/537.36'}
     res = requests.get(url, headers=headers)  # get方法中加入请求头
@@ -198,11 +168,11 @@ def process_getGroupList(url,encoding):
     p.join()
     return
 
-group = 'https://www.xxx.com/tupian/list-2.html'
+group = 'https://www.3c3a6.com/tupian/list-2.html'
 
 urls = [
-    # 'https://www.xxx.com/tupian/126069.html',
-    'https://www.xxx.com/tupian/126068.html',
+    # 'https://www.3c3a6.com/tupian/126069.html',
+    'https://www.3c3a6.com/tupian/126068.html',
 ]
 
 if __name__ == "__main__":
@@ -218,5 +188,5 @@ if __name__ == "__main__":
 
     # 下载指定的书
    
-    process_getGroupList(group,'utf-8')
-    # process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
+    # process_getGroupList(group,'utf-8')
+    process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令

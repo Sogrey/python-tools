@@ -1,4 +1,5 @@
 # 去除字符串首尾空格
+import os
 import re
 
 
@@ -39,3 +40,18 @@ def Merge(dict1, dict2):
     res = {**dict1, **dict2} 
     return res 
 
+"""
+'https://img.xxx.com/passimg/llt/TGOD/软妹子徐微微/01.jpg'
+
+return :
+('https://img.xxx.com/passimg/llt/TGOD/软妹子徐微微', '01', '.jpg')
+"""
+def get_filePath_fileName_fileExt(fileUrl):
+    """
+    获取文件路径， 文件名， 后缀名
+    :param fileUrl:
+    :return:
+    """
+    filepath, tmpfilename = os.path.split(fileUrl)
+    shotname, extension = os.path.splitext(tmpfilename)
+    return filepath, shotname, extension

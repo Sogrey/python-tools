@@ -1,3 +1,5 @@
+# -*- coding=UTF-8 -*-
+
 import sys
 import re
 import os
@@ -7,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 
 from config import Config, OutputDir
-from utils import getWebHost, removeN, trim
+from utils import getWebHost, removeN, trim, get_filePath_fileName_fileExt
 
 def thread_getOneHtml(url, encoding):
     headers = {
@@ -71,11 +73,15 @@ def thread_getOneHtml(url, encoding):
         os.makedirs(this_output)  # 判断没有此路径则创建
     paths = this_output + '\\'  # 保存在test路径下
     for img in imgList:
-        imgFileName = '{0}{1}.jpg'.format(paths, index)
-
         imgurl = img[imgUrlAttrCss]
-        print(imgurl)
-        urllib.request.urlretrieve(imgurl, imgFileName)  # 打开imgList,下载图片到本地
+        print(imgurl) 
+
+        fileSuffix = '.jpg'
+        fileSuffix = get_filePath_fileName_fileExt(imgurl)[2]
+
+        imgFileName = '{0}{1}{2}'.format(paths, index, fileSuffix)
+
+        urllib.request.urlretrieve(urllib.parse.quote(imgurl, safe='/:?=', encoding=None, errors=None), imgFileName) # 打开imgList,下载图片到本地
         index = index+1
  
 def process_getImages(urls):
@@ -168,11 +174,30 @@ def process_getGroupList(url,encoding):
     p.join()
     return
 
-group = 'https://www.xxxxx.com/tupian/list-2.html'
+def process_getMulGroupList():
+    # p = multiprocessing.Pool()
+    
+    index = 0
+    while (index < 47):
+        index = index + 1
+        grpUrl = "https://www.xxx.com/list-"+str(index)+".html"
+
+        print(grpUrl)
+        process_getGroupList(grpUrl,'utf-8')
+
+        # p.apply_async(process_getGroupList, args=(grpUrl, 'utf-8'))
+
+    # p.close()
+    # p.join()
+    return
+
+
+group = 'https://www.xxx.com/list-9.html'
 
 urls = [
-    # 'https://www.xxxxx.com/tupian/126069.html',
-    'https://www.xxxxx.com/tupian/126068.html',
+    # 'https://mp.weixin.qq.com/s/AR5WsqleSsAM9a3rPI9THw',
+    # 'https://mp.weixin.qq.com/s/tl3NRZWjPOv2iVZdBAKEsw'
+    'https://www.xxx.com/meinv/126211.html'
 ]
 
 if __name__ == "__main__":
@@ -188,5 +213,16 @@ if __name__ == "__main__":
 
     # 下载指定的书
    
+    # process_getMulGroupList()
+   
     # process_getGroupList(group,'utf-8')
     process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
+
+    # imgurl = 'https://img.xxx.com/passimg/llt/TGOD/软妹子徐微微/01.jpg'
+    # imgFileName = OutputDir+"00\\软妹子徐微微-01.jpg"
+    # urllib.request.urlretrieve(urllib.parse.quote(imgurl, safe='/:?=', encoding=None, errors=None), imgFileName)
+
+
+    
+    # sf = get_filePath_fileName_fileExt(imgurl)
+    # print(sf[2])

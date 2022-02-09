@@ -197,7 +197,7 @@ group = 'https://www.xxx.com/list-9.html'
 urls = [
     # 'https://mp.weixin.qq.com/s/AR5WsqleSsAM9a3rPI9THw',
     # 'https://mp.weixin.qq.com/s/tl3NRZWjPOv2iVZdBAKEsw'
-    'https://www.xxx.com/meinv/126211.html'
+    'https://www.97d77.com/meinv/46629.html'
 ]
 
 if __name__ == "__main__":
@@ -210,8 +210,6 @@ if __name__ == "__main__":
         urls = [
             sys.argv[1]
         ]
-
-    # 下载指定的书
    
     # process_getMulGroupList()
    

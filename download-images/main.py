@@ -78,8 +78,9 @@ def thread_getOneHtml(url, encoding):
         if len(imgurl)==0 or imgurl is None:
             continue
 
-        fileSuffix = '.jpg'
         fileSuffix = get_filePath_fileName_fileExt(imgurl)[2]
+        if(len(fileSuffix)==0 or fileSuffix.lower() not in ['.jpg','.jpeg','.png']) :
+            fileSuffix = '.jpg' # 其他默认按 .jpg 存储
 
         imgFileName = '{0}{1}{2}'.format(paths, index, fileSuffix)
 
@@ -199,7 +200,7 @@ group = 'https://www.xxx.com/list-9.html'
 urls = [
     # 'https://mp.weixin.qq.com/s/AR5WsqleSsAM9a3rPI9THw',
     # 'https://mp.weixin.qq.com/s/tl3NRZWjPOv2iVZdBAKEsw'
-    'https://www.xxx.com/46481.html'
+    'https://mp.weixin.qq.com/s/xwOOqnG0FoU-p0Pwh9wwbQ'
 ]
 
 if __name__ == "__main__":

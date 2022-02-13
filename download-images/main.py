@@ -198,9 +198,7 @@ def process_getMulGroupList():
 group = 'https://www.xxx.com/list-9.html'
 
 urls = [
-    # 'https://mp.weixin.qq.com/s/AR5WsqleSsAM9a3rPI9THw',
-    # 'https://mp.weixin.qq.com/s/tl3NRZWjPOv2iVZdBAKEsw'
-    'https://mp.weixin.qq.com/s/xwOOqnG0FoU-p0Pwh9wwbQ'
+    'https://mp.weixin.qq.com/s/LUGrZ2slYVWr6GCyA6TtiA'
 ]
 
 if __name__ == "__main__":

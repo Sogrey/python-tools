@@ -180,10 +180,10 @@ def process_getGroupList(url,encoding):
 def process_getMulGroupList():
     # p = multiprocessing.Pool()
     
-    index = 0
-    while (index < 47):
+    index = 10
+    while (index < 38): # 38
         index = index + 1
-        grpUrl = "https://www.xxx.com/list-"+str(index)+".html"
+        grpUrl = 'https://www.xxxxx.com/meinv/list-'+str(index)+'.html'
 
         print(grpUrl)
         process_getGroupList(grpUrl,'utf-8')
@@ -198,7 +198,7 @@ def process_getMulGroupList():
 group = 'https://www.xxx.com/list-9.html'
 
 urls = [
-    'https://mp.weixin.qq.com/s/LUGrZ2slYVWr6GCyA6TtiA'
+    'https://mp.weixin.qq.com/s/xxxxx'
 ]
 
 if __name__ == "__main__":
@@ -212,10 +212,10 @@ if __name__ == "__main__":
             sys.argv[1]
         ]
    
-    # process_getMulGroupList()
+    process_getMulGroupList()
    
     # process_getGroupList(group,'utf-8')
-    process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
+    # process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
 
     # imgurl = 'https://img.xxx.com/passimg/llt/TGOD/软妹子徐微微/01.jpg'
     # imgFileName = OutputDir+"00\\软妹子徐微微-01.jpg"

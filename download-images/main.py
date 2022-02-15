@@ -8,7 +8,7 @@ import multiprocessing
 import requests
 from bs4 import BeautifulSoup
 
-from config import Config, OutputDir
+from config import Config, OutputDir, regular_metaCharset
 from utils import getWebHost, removeN, trim, get_filePath_fileName_fileExt
 
 def thread_getOneHtml(url, encoding):
@@ -29,13 +29,10 @@ def thread_getOneHtml(url, encoding):
     # <meta http-equiv="Content-Type" content="text/html; charset=gbk">
     # <meta charset="utf-8">
 
-    rmetaCharset = [
-        r'meta http-equiv="Content-Type" content="text/html; charset=(.*)"',
-        r'meta charset="(.*)"'
-    ]
 
-    encoding1 = 'gbk'
-    for r in rmetaCharset:
+
+    encoding1 = 'utf-8'
+    for r in regular_metaCharset:
         regular = re.compile(r)
         encodingContent = re.findall(regular, html)
         if(encodingContent != None and len(encodingContent) > 0):
@@ -123,13 +120,8 @@ def process_getGroupList(url,encoding):
     # <meta http-equiv="Content-Type" content="text/html; charset=gbk">
     # <meta charset="utf-8">
 
-    rmetaCharset = [
-        r'meta http-equiv="Content-Type" content="text/html; charset=(.*)"',
-        r'meta charset="(.*)"'
-    ]
-
-    encoding1 = 'gbk'
-    for r in rmetaCharset:
+    encoding1 = 'utf-8'
+    for r in regular_metaCharset:
         regular = re.compile(r)
         encodingContent = re.findall(regular, html)
         if(encodingContent != None and len(encodingContent) > 0):
@@ -180,10 +172,10 @@ def process_getGroupList(url,encoding):
 def process_getMulGroupList():
     # p = multiprocessing.Pool()
     
-    index = 10
-    while (index < 38): # 38
+    index = 0
+    while (index < 42):
         index = index + 1
-        grpUrl = 'https://www.xxxxx.com/meinv/list-'+str(index)+'.html'
+        grpUrl = 'https://www.xxxxx.com/list-'+str(index)+'.html'
 
         print(grpUrl)
         process_getGroupList(grpUrl,'utf-8')
@@ -195,7 +187,7 @@ def process_getMulGroupList():
     return
 
 
-group = 'https://www.xxx.com/list-9.html'
+group = 'https://www.xxxxx.com/list-9.html'
 
 urls = [
     'https://mp.weixin.qq.com/s/xxxxx'
@@ -216,6 +208,16 @@ if __name__ == "__main__":
    
     # process_getGroupList(group,'utf-8')
     # process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
+
+
+
+
+
+
+
+
+
+    
 
     # imgurl = 'https://img.xxx.com/passimg/llt/TGOD/软妹子徐微微/01.jpg'
     # imgFileName = OutputDir+"00\\软妹子徐微微-01.jpg"

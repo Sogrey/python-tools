@@ -172,8 +172,8 @@ def process_getGroupList(url,encoding):
 def process_getMulGroupList():
     # p = multiprocessing.Pool()
     
-    index = 0
-    while (index < 42):
+    index = 40
+    while (index < 46):
         index = index + 1
         grpUrl = 'https://www.xxxxx.com/list-'+str(index)+'.html'
 

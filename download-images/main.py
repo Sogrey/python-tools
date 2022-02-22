@@ -172,10 +172,10 @@ def process_getGroupList(url,encoding):
 def process_getMulGroupList():
     # p = multiprocessing.Pool()
     
-    index = 40
+    index = 0
     while (index < 46):
         index = index + 1
-        grpUrl = 'https://www.xxxxx.com/list-'+str(index)+'.html'
+        grpUrl = 'https://www.xxxxx.com/tupian/list-'+str(index)+'.html'
 
         print(grpUrl)
         process_getGroupList(grpUrl,'utf-8')

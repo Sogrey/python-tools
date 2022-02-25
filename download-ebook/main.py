@@ -9,7 +9,7 @@ import re
 import os
 import time
 from config import Config, Host, OutputDir
-from utils.utils import getWebHost, removeN, trim
+from utils import getWebHost, removeN, trim
 
 
 # 通过章节的url下载内容，并返回下一页的url

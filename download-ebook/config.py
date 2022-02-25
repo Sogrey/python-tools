@@ -1,5 +1,5 @@
 Host = r'([http|https]+://[^\s]*[.com|.cn|.la|.net|.biz]/)'
-OutputDir = 'books'
+OutputDir = 'output/download-ebooks/'
 
 
 def Merge(dict1, dict2):

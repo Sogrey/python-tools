@@ -190,7 +190,7 @@ def process_getMulGroupList():
 group = 'https://www.xxxxx.com/list-9.html'
 
 urls = [
-    'https://mp.weixin.qq.com/s/xxxxx'
+    'https://mp.weixin.qq.com/s/xxxxx',
 ]
 
 if __name__ == "__main__":
@@ -204,10 +204,11 @@ if __name__ == "__main__":
             sys.argv[1]
         ]
    
-    process_getMulGroupList()
+    # process_getMulGroupList()
    
-    # process_getGroupList(group,'utf-8')
-    # process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
+   # process_getGroupList(group,'utf-8')
+    
+    process_getImages(urls)  # 如果下载完出现卡的话，请单独执行如下命令
 
 
 

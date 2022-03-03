@@ -187,7 +187,7 @@ def process_getMulGroupList():
     return
 
 
-group = 'https://www.xxxxx.com/list-9.html'
+group = 'https://www.xxxxx.com/list-1.html'
 
 urls = [
     'https://mp.weixin.qq.com/s/xxxxx',

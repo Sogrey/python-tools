@@ -339,8 +339,8 @@ urls = [
     # 'http://www.biquge001.com/Book/2/2321/'
     # 'https://www.xbiquge.la/0/745/'
     # 'http://www.biquge001.com/Book/18/18632/'
-    # 'http://www.399xs.com/book/0/611/'
-    'https://www.yousheng8.com/yousheng/704/'
+    'http://www.399xs.com/book/0/611/'
+    # 'https://www.yousheng8.com/yousheng/704/'
 ]
 
 # 原址编码：gbk" src="https://www.baidu.com/js/opensug.js

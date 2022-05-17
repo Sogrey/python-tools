@@ -190,7 +190,40 @@ def process_getMulGroupList():
 group = 'https://www.xxxxx.com/list-1.html'
 
 urls = [
-    'https://mp.weixin.qq.com/s/xxxxx',
+    'https://mp.weixin.qq.com/s/qmeX1_gH0xpG1yi4JpQY8g',
+    'https://mp.weixin.qq.com/s/S_WF1sFJ_R_eUeQHaVLb0A',
+    'https://mp.weixin.qq.com/s/7gCp8siFJF_CirkiZ1lwGw',
+    'https://mp.weixin.qq.com/s/cgpg1OaK_8QXP_St1I-HVg',
+    'https://mp.weixin.qq.com/s/AjCIDMAR4RMeE2_1DJzAHQ',
+    'https://mp.weixin.qq.com/s/uWkXxw3PJ9K5TVZm8IoXiQ',
+    'https://mp.weixin.qq.com/s/rtBso4wbshtjxz28jJ55YA',
+    'https://mp.weixin.qq.com/s/7INOIev43gaCj07XM0OTZg',
+    'https://mp.weixin.qq.com/s/lEITYw2yQcCl-PBi51q62g',
+    'https://mp.weixin.qq.com/s/a2HFSXpuBJMqSRGBhpY8bw',
+    'https://mp.weixin.qq.com/s/7MC0jq4znoWlbYYSPSgy7w',
+    'https://mp.weixin.qq.com/s/efKmrFWuQRqfPafnBYzMtw',
+    'https://mp.weixin.qq.com/s/lDqyMQ7EPOYX1bd0SCgWuA',
+    'https://mp.weixin.qq.com/s/LdxiJEvRED8Ko2zkvC5CKQ',
+    'https://mp.weixin.qq.com/s/CrZTQyO7xbaDM4X6uIt8LQ',
+    'https://mp.weixin.qq.com/s/1u0GHXZ7GYATnYxs-oS0CQ',
+    'https://mp.weixin.qq.com/s/YHtABaxzsP9Ut1KaBwVUwA',
+    'https://mp.weixin.qq.com/s/9XLWHpSlhoNqhtXE5sKY-A',
+    'https://mp.weixin.qq.com/s/tb5u0h9PzXXxRCrKGJUt4w',
+    'https://mp.weixin.qq.com/s/-H6K2C1uRpdbh0tyJGtUCQ',
+    'https://mp.weixin.qq.com/s/rb6hjfQZVEKD8LA0ZoQ_tA',
+    'https://mp.weixin.qq.com/s/bby8k-cknEURemVrvH-BLQ',
+    'https://mp.weixin.qq.com/s/cmvgVTxkrkNfTRpV6qQzSA',
+    'https://mp.weixin.qq.com/s/AEUIskNUJjvLZ078fwX0qQ',
+    'https://mp.weixin.qq.com/s/JKj4XAPBCr89l8lrka2fzg',
+    'https://mp.weixin.qq.com/s/13Yy8w8dO65t6LPjC2rKeQ',
+    'https://mp.weixin.qq.com/s/5xX90iXU4Hu0bLZbKNpFOA',
+    'https://mp.weixin.qq.com/s/4UGmavwwc7xXInhJn9LAFQ',
+    'https://mp.weixin.qq.com/s/EiRrTXDdD2795JIgAk1QUQ',
+    'https://mp.weixin.qq.com/s/NxuuPId4WVPZh5__2y04Nw',
+    'https://mp.weixin.qq.com/s/lAauQXolt7ISET4PhYUK4A',
+    'https://mp.weixin.qq.com/s/8mcrendUTODfcByS8JqEQg',
+    'https://mp.weixin.qq.com/s/-FhRoUp8q9Cndsy9Pbc0ew',
+    
 ]
 
 if __name__ == "__main__":

@@ -1,0 +1,1 @@
+ python main.py ./test/1000.png ./test/pwd.bin ./test/output.png

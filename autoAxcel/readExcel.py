@@ -1,5 +1,7 @@
 # pip install openpyxl
 
+# https://www.bilibili.com/video/BV1sg41167fA/?p=2&spm_id_from=pageDriver&vd_source=96276a0eadd5914be7e81924f0535ab3
+
 from openpyxl import load_workbook
 
 # 加载Excel

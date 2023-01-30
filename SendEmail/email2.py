@@ -7,10 +7,10 @@ from email.header import Header
 
 
 # 发信方的信息：发信邮箱，QQ 邮箱授权码
-from_addr = '408270653@qq.com'
-password = 's0712090114S'
+from_addr = '2222@qq.com'
+password = 'nimdvxdtsbvhbgbd'
 # 收信方邮箱
-to_addr = '408270653@qq.com'
+to_addr = '11111@qq.com'
 # 发信服务器
 smtp_server = 'smtp.qq.com'
 
@@ -31,8 +31,8 @@ try:
     # 发送邮件
     smtpobj.sendmail(from_addr, to_addr, msg.as_string()) 
     print("邮件发送成功")
-# except smtplib.SMTPException:
-#     print("无法发送邮件")
+except smtplib.SMTPException:
+    print("无法发送邮件")
 finally:
     # 关闭服务器
     smtpobj.quit()

@@ -25,5 +25,7 @@ for row in ws.rows:  # 获取每一行的数据
     print(f'序号:{row[1].value}	部门:{row[2].value}	姓名:{row[3].value}	月工资标准:{row[5].value}	岗位工资:{row[6].value}	绩效工资:{row[7].value}	工龄补贴:{row[8].value}	全勤奖:{row[9].value}')
     count+=1
 
+    break
+
 
 

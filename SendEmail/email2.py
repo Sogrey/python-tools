@@ -7,15 +7,85 @@ from email.header import Header
 
 
 # 发信方的信息：发信邮箱，QQ 邮箱授权码
-from_addr = '2222@qq.com'
+from_addr = '22222@qq.com'
 password = 'nimdvxdtsbvhbgbd'
 # 收信方邮箱
-to_addr = '11111@qq.com'
+to_addr = '111111@qq.com'
 # 发信服务器
 smtp_server = 'smtp.qq.com'
 
 # 邮箱正文内容，第一个参数为内容，第二个参数为格式(plain 为纯文本)，第三个参数为编码
-msg = MIMEText('使用python发送邮件测试', 'plain', 'utf-8')
+
+text= '''
+<style>.scrolling-wrapper{overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;}table{border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;}table caption{background-color:#323232;padding:7px;font-size:21px;}table td,th{padding:5px;text-align:center;border:1px solid #70aefb;vertical-align:middle;font-size:15px;}</style>
+
+张三，你好：<br />
+&emsp;&emsp;以下是上月绩效考核及薪资组成，请查收！<br />
+
+<div class="scrolling-wrapper">
+  <table class="">
+    <caption>2023年01月 绩效考核表</caption>
+    <tr>
+      <td>姓名</td>
+      <td>考核基数</td>
+      <td>工作时间投入度</td>
+      <td>产出质量</td>
+      <td>按期交付能力</td>
+      <td>加权累计%</td>
+      <td>姓名</td>
+      <td>考核基数</td>
+      <td>工作时间投入度</td>
+      <td>产出质量</td>
+      <td>按期交付能力</td>
+      <td>加权累计%</td>
+      <td>姓名</td>
+      <td>考核基数</td>
+      <td>工作时间投入度</td>
+      <td>产出质量</td>
+      <td>按期交付能力</td>
+      <td>加权累计%</td>
+      <td>姓名</td>
+      <td>考核基数</td>
+      <td>工作时间投入度</td>
+      <td>产出质量</td>
+      <td>按期交付能力</td>
+      <td>加权累计%</td>
+    </tr>
+    <tr>
+      <td>张三</td>
+      <td>100%</td>
+      <td>104%</td>
+      <td>110%</td>
+      <td>100%</td>
+      <td>106%</td>
+      <td>张三</td>
+      <td>100%</td>
+      <td>104%</td>
+      <td>110%</td>
+      <td>100%</td>
+      <td>106%</td>
+      <td>张三</td>
+      <td>100%</td>
+      <td>104%</td>
+      <td>110%</td>
+      <td>100%</td>
+      <td>106%</td>
+      <td>张三</td>
+      <td>100%</td>
+      <td>104%</td>
+      <td>110%</td>
+      <td>100%</td>
+      <td>106%</td>
+    </tr>
+    <tr>
+      <td colspan=6>时间：2023-02-11 15:34:24</td>
+    </tr>
+  </table>
+</div>
+以上数据如有疑问，请及时反馈！
+'''
+
+msg = MIMEText(text, 'html', 'utf-8')
 # 邮件头信息
 msg['From'] = Header('张三')  # 发送者
 msg['To'] = Header('李四')  # 接收者

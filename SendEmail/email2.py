@@ -1,3 +1,4 @@
+import os
 # smtplib 用于邮件的发信动作
 import smtplib
 # email 用于构建邮件内容
@@ -7,10 +8,10 @@ from email.header import Header
 
 
 # 发信方的信息：发信邮箱，QQ 邮箱授权码
-from_addr = '22222@qq.com'
+from_addr = '408270653@qq.com'
 password = 'nimdvxdtsbvhbgbd'
 # 收信方邮箱
-to_addr = '111111@qq.com'
+to_addr = '408270653@qq.com'
 # 发信服务器
 smtp_server = 'smtp.qq.com'
 
@@ -106,4 +107,11 @@ except smtplib.SMTPException:
 finally:
     # 关闭服务器
     smtpobj.quit()
+
+wait = input("""
+执行完成
+    按任意键结束。""")
+# os.system("pause")
+
+# pyinstaller -F -w -i logo.ico  email2.py
 

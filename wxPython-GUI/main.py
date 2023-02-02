@@ -11,6 +11,8 @@ import wx
 # 打包 pyinstaller -F -w main.py 
 
 # https://docs.wxpython.org/
+
+# wxformbuilder : https://sourceforge.net/projects/wxformbuilder/
   
 class HelloFrame(wx.Frame):
     """

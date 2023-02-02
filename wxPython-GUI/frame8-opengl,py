@@ -1,0 +1,183 @@
+# pip install PyOpenGL PyOpenGL_accelerate
+
+
+import numpy as np
+from OpenGL.GL import *
+from OpenGL.GLU import *
+
+import wx
+from wx import glcanvas
+
+class MainFrame(wx.Frame):
+    """从wx.Frame派生主窗口类"""
+    
+    def __init__(self, parent):
+        """构造函数"""
+        
+        wx.Frame.__init__(self, parent, style=wx.DEFAULT_FRAME_STYLE)
+        
+        self.SetTitle('集成OpenGL')
+        self.SetIcon(wx.Icon('res/logo.ico'))
+        self.SetSize((800, 600))
+        self.Center()
+        
+        # 创建OpenGL的canvas
+        self.canvas = glcanvas.GLCanvas(self, style=glcanvas.WX_GL_RGBA|glcanvas.WX_GL_DOUBLEBUFFER|glcanvas.WX_GL_DEPTH_SIZE)
+        self.csize = self.canvas.GetClientSize()
+        self.context = glcanvas.GLContext(self.canvas)
+        self.canvas.SetCurrent(self.context) # 设置GL上下文
+        
+        sizer_max = wx.BoxSizer()
+        sizer_max.Add(self.canvas, 1, wx.EXPAND|wx.ALL, 0)
+        self.SetSizer(sizer_max)
+        self.Layout()
+        
+        glClearColor(0,0,0,1) # 设置画布背景色
+        glEnable(GL_DEPTH_TEST) # 开启深度测试，实现遮挡关系        
+        glDepthFunc(GL_LEQUAL) # 设置深度测试函数
+                
+        self.oecs = [0.0, 0.0, 0.0] # 视点坐标系原点
+        self.cam_pos = [0.0, 0.0, 5.0] # 相机位置
+        self.cam_up = [0.0, 1.0, 0.0] # 指向上方的向量
+        self.dist = 5.0 # 相机距离视点坐标系原点的距离
+        self.azim = 0.0 # 初始方位角
+        self.elev = 0.0 # 初始高度角
+        
+        self.leftdown = False # 鼠标左键按下
+        self.mpos = wx._core.Point() # 鼠标位置
+        
+        self.canvas.Bind(wx.EVT_SIZE, self.on_resize) # 绑定canvas改变宽高事件 
+        self.canvas.Bind(wx.EVT_LEFT_DOWN, self.on_left_down) # 绑定鼠标左键按下事件
+        self.canvas.Bind(wx.EVT_LEFT_UP, self.on_left_up) # 绑定鼠标左键弹起事件                   
+        self.canvas.Bind(wx.EVT_MOTION, self.on_mouse_motion) # 绑定鼠标移动事件
+        self.canvas.Bind(wx.EVT_MOUSEWHEEL, self.on_mouse_wheel) # 绑定鼠标滚轮事件
+        
+        self.draw()
+    
+    def on_resize(self, evt):
+        """窗口改变事件函数"""
+        
+        self.canvas.SetCurrent(self.context)
+        self.csize = self.GetClientSize()
+        
+        self.draw()
+        evt.Skip()
+        
+    def on_left_down(self, evt):
+        """响应鼠标左键按下事件"""
+        
+        self.leftdown = True
+        self.mpos = evt.GetPosition()
+        
+    def on_left_up(self, evt):
+        """响应鼠标左键弹起事件"""
+        
+        self.leftdown = False
+        
+    def on_mouse_motion(self, evt):
+        """响应鼠标移动事件"""
+        
+        if evt.Dragging() and self.leftdown:
+            pos = evt.GetPosition()
+            dx, dy = pos - self.mpos
+            self.mpos = pos
+            
+            azim = self.azim - self.cam_up[1]*(180*dx/self.csize[0])
+            elev = self.elev + 90*dy/self.csize[1]
+            self.update_cam_and_up(azim=azim, elev=elev)
+            self.draw()
+        
+    def on_mouse_wheel(self, evt):
+        """响应鼠标滚轮事件"""
+        
+        if evt.WheelRotation < 0:
+            dist = self.dist * 1.02
+        else:
+            dist = self.dist * 0.98
+        
+        self.update_cam_and_up(dist=dist)
+        self.draw()
+    
+    def update_cam_and_up(self, dist=None, azim=None, elev=None):
+        """根据相机与ECS原点的距离、方位角、仰角等参数，重新计算相机位置和up向量"""
+        
+        if not dist is None:
+            self.dist = dist
+        
+        if not azim is None:
+            self.azim = (azim+180)%360 - 180
+        
+        if not elev is None:
+            self.elev = (elev+180)%360 - 180
+        
+        azim, elev  = np.radians(self.azim), np.radians(self.elev)
+        d = self.dist * np.cos(elev)
+        
+        self.cam_pos[1] = self.dist * np.sin(elev) + self.oecs[1]
+        self.cam_pos[2] = d * np.cos(azim) + self.oecs[2]
+        self.cam_pos[0] = d * np.sin(azim) + self.oecs[0]
+        self.cam_up[1] = 1.0 if -90 <= self.elev <= 90 else -1.0
+    
+    def draw(self):
+        """绘制"""
+        
+        # 根据窗口宽高计算视锥体
+        k = self.csize[0]/self.csize[1]
+        view = (-k, k, -1, 1, 3, 10) if k > 1 else (-1, 1, -1/k,1/k, 3, 10)
+        
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT) # 清除屏幕及深度缓存
+        glViewport(0, 0, *self.csize) # 设置视口
+        
+        # 设置投影（透视投影）
+        glMatrixMode(GL_PROJECTION)
+        glLoadIdentity()
+        glFrustum(*view)
+        
+        # 设置视点
+        gluLookAt(*self.cam_pos, *self.oecs, *self.cam_up)
+        
+        # 六面体顶点编号示意图
+        #    v4----- v7
+        #   /|      /|
+        #  v0------v3|
+        #  | |     | |
+        #  | v5----|-v6
+        #  |/      |/
+        #  v1------v2
+
+        # 六面体顶点集
+        vertices = [
+            [-1,1,1],  [-1,-1,1],  [1,-1,1],  [1,1,1], # v0-v1-v2-v3
+            [-1,1,-1], [-1,-1,-1], [1,-1,-1], [1,1,-1] # v4-v5-v6-v7
+        ]
+        
+        # 顶点集对用的颜色
+        colors = [
+            [0.8,0,0], [0,0.8,0], [0,0,0.8], [1,1,0.2], # v0-v1-v2-v3
+            [1,0.2,1], [0.2,1,1], [0.5,1,0], [0,1,0.5]  # v4-v5-v6-v7
+        ]
+
+        # 顶点构成四边形的索引集
+        indices = [
+            0, 1, 2, 3, # v0-v1-v2-v3 (front)
+            4, 0, 3, 7, # v4-v0-v3-v7 (top)
+            1, 5, 6, 2, # v1-v5-v6-v2 (bottom)
+            7, 6, 5, 4, # v7-v6-v5-v4 (back)
+            3, 2, 6, 7, # v3-v2-v6-v7 (right)
+            4, 5, 1, 0  # v4-v5-v1-v0 (left)
+        ]
+        
+        glBegin(GL_QUADS) # 开始绘制四角面
+        for i in indices:
+            glColor3f(*colors[i])
+            glVertex3f(*vertices[i])
+        glEnd() # 结束绘制四角面
+        
+        # 交换缓冲区
+        self.canvas.SwapBuffers() 
+
+if __name__ == '__main__':
+    app = wx.App()
+    frame = MainFrame(None)
+    frame.Show()
+    app.MainLoop()

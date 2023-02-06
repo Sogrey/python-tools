@@ -1,4 +1,7 @@
+# -*- coding:utf-8 -*-
 import os
+import os.path
+import datetime
 import wx
 from ui.MainFrame import MyFrame1
 
@@ -12,16 +15,79 @@ from email.mime.text import MIMEText
 # 构建邮件头
 from email.header import Header
 
+from configparser import ConfigParser
+
+version = '1.0.2'
 
 class UiFrame(MyFrame1):
     def __init__(self, parent):
         MyFrame1.__init__(self, parent)
-        pass
 
-    # 验证邮箱
-    def OnVerifyEmailEvent(self, event):
-        event.Skip()
-        print('验证邮箱')
+        current_path = os.getcwd()
+        # print(current_path)
+
+        today = datetime.datetime.today()#today = datetime.datetime.today()
+        year = today.year#2022
+        month = today.month-1 # 上月
+        if(today.month==1): # 去年12月
+            year = year-1
+            month = 12
+
+        year_month = "{}年{}月".format(year,month)
+        self.m_textCtrl6.SetValue(year_month)
+
+        configPath= current_path + '/' + 'config.ini'
+
+        if not os.path.exists(configPath):
+ 
+            config_ini = open(configPath, 'w', encoding='utf-8')    
+            # 注意如果是在WIN系统，在写入中文时，需要设置编码格式;如果不是WIN系统，则不需要设置编码格式
+            
+            config_ini.write('''
+[Sender]
+from_addr=
+password=
+
+[Excel]
+JiXiaoSheetLabel=绩效表
+GongZiSheetLabel=工资表
+JiXiaoSheetHeaderLineNum=2
+GongZiSheetHeaderLineNum=3
+
+[Email]
+EmailSubject={}工资条
+            '''.format(year_month))
+            config_ini.close()
+
+        # 读取上次配置
+        config_ini = ConfigParser()
+        config_ini.read(configPath, encoding='utf-8')
+        # print(config_ini.items("Sender"))  # 获取cmd节点下的所有键值对
+        # print(config_ini.sections())  # 获取所有的节点
+        # print(config_ini.get("Email", "EmailSubject"))  # 获取platformName的值
+
+        self.m_textCtrl1.SetValue(config_ini.get("Sender", "from_addr"))
+        self.m_textCtrl2.SetValue(config_ini.get("Sender", "password"))
+
+        self.m_textCtrl3.SetValue(config_ini.get("Excel", "JiXiaoSheetLabel"))
+        self.m_textCtrl4.SetValue(config_ini.get("Excel", "GongZiSheetLabel"))
+
+        self.m_spinCtrl1.SetValue(config_ini.get("Excel", "JiXiaoSheetHeaderLineNum"))
+        self.m_spinCtrl2.SetValue(config_ini.get("Excel", "GongZiSheetHeaderLineNum"))
+
+        self.m_textCtrl7.SetValue(config_ini.get("Email", "EmailSubject"))
+
+    def m_spinCtrl1OnSpinCtrlText( self, event ):
+        lineNum = self.m_spinCtrl1.GetValue()
+        self.m_staticText101.SetLabel("即从第{}行起读数据".format(lineNum+1))
+
+    def m_spinCtrl2OnSpinCtrlText( self, event ):
+        lineNum = self.m_spinCtrl2.GetValue()
+        self.m_staticText11.SetLabel("即从第{}行起读数据".format(lineNum+1))
+
+    def m_menuItem1OnMenuSelection( self, event ):
+        wx.MessageBox('当前版本：'+version, '帮助',
+            wx.OK | wx.ICON_INFORMATION)
 
     # 整理数据
     def OnStartDistributeEvent(self, event):
@@ -46,8 +112,8 @@ class UiFrame(MyFrame1):
             JXSheetLabel = self.m_textCtrl3.GetValue()
             GZSheetLabel = self.m_textCtrl4.GetValue()
 
-            JXSheetHeaderLineNum = self.m_textCtrl5.GetValue()
-            GZSheetHeaderLineNum = self.m_textCtrl6.GetValue()
+            JXSheetHeaderLineNum = self.m_spinCtrl1.GetValue()
+            GZSheetHeaderLineNum = self.m_spinCtrl2.GetValue()
 
             # 获取绩效工作簿
             ws_JX = wb[JXSheetLabel]
@@ -132,7 +198,21 @@ class UiFrame(MyFrame1):
             # 邮件标题
             subject = self.m_textCtrl7.GetValue()
 
-            SendEmail(from_addr, password, subject, Comprehensive_data, self.m_staticText1)
+            config_ini = ConfigParser()
+            config_ini.read("config.ini", encoding="utf-8")
+            config_ini.set("Sender", "from_addr", from_addr)  # 修改数据            
+            config_ini.set("Sender", "password", password)  # 修改数据  
+
+            config_ini.set("Excel", "JiXiaoSheetLabel", JXSheetLabel)  # 修改数据
+            config_ini.set("Excel", "GongZiSheetLabel", GZSheetLabel)  # 修改数据
+            config_ini.set("Excel", "JiXiaoSheetHeaderLineNum", str(JXSheetHeaderLineNum))  # 修改数据
+            config_ini.set("Excel", "GongZiSheetHeaderLineNum", str(GZSheetHeaderLineNum))  # 修改数据
+
+            config_ini.set("Email", "EmailSubject", subject)  # 修改数据
+
+            config_ini.write(open("config.ini", "w", encoding="utf-8"))
+
+            SendEmail(from_addr, password, subject, Comprehensive_data, self)
 
         except OSError as reason:
 
@@ -142,7 +222,7 @@ class UiFrame(MyFrame1):
             self.m_staticText1.SetLabel('出错原因是%s' % str(reason))
 
 # 分发数据
-def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
+def SendEmail(from_addr, password, subject, Comprehensive_data, self):
 
     try:
 
@@ -155,7 +235,7 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
 
         text="""
         {name}，你好：<br />
-        &emsp;&emsp;以下是上月绩效考核及薪资组成，请查收！<br />
+        &emsp;&emsp;以下是{date}绩效考核及薪资组成，请查收！<br />
 
         <div class="scrolling-wrapper">
         <table class="">
@@ -246,21 +326,18 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
         以上数据如有疑问，请及时反馈！
         """
 
-        # one, two, three = 1, 2, 3
-        # print("You use {0}, {2}, {1}.".format(one, two, three))
-
-        # message = """
-        #   Hello, {foo}
-        #   Sincerely, {bar}
-        #   """
-        # print (message.format(foo = "John", bar = "Doe"))
-
+        date = self.m_textCtrl6.GetValue()
 
         smtpobj = smtplib.SMTP_SSL(smtp_server)
         # 建立连接--qq邮箱服务和端口号（可百度查询）
         smtpobj.connect(smtp_server, 465)    
         # 登录--发送者账号和口令
         smtpobj.login(from_addr, password)  
+
+        count = 0
+        total = len(Comprehensive_data)
+
+        self.m_gauge1.SetRange(total)
 
         for key in Comprehensive_data.keys():
 
@@ -279,7 +356,7 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
 
             gz_text = "".join(gz_text_array)
 
-            content = text.format(name = to_name, JX_Table_Header = "2023年2月绩效表", JX_Table_Datas = """
+            content = text.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
             <td>{}</td>
             <td>{}</td>
             <td>{}</td>
@@ -292,7 +369,7 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
             str('%.2f' % (float(jx[3])*100))+'%',
             str('%.2f' % (float(jx[4])*100))+'%',
             str('%.2f' % (float(jx[5])*100))+'%'),
-            GZ_Table_Header = "2023年2月工资表",GZ_Table_Datas = gz_text)
+            GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
 
             msg = MIMEText(css+content, 'html', 'utf-8')
 
@@ -306,11 +383,14 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
                 # 发送邮件
                 smtpobj.sendmail(from_addr, to_addr, msg.as_string()) 
                 print("邮件发送成功")
-                statusText.SetLabel('分发到 %s (%s) 成功' % (str(to_name),str(to_addr)))
+                self.m_staticText1.SetLabel('分发到 %s (%s) 成功' % (str(to_name),str(to_addr)))
+
+                count = count+1
+                self.m_gauge1.SetValue(count)
 
             except smtplib.SMTPException as reason:
                 print("无法发送邮件")
-                statusText.SetLabel('无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason)))
+                self.m_staticText1.SetLabel('无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason)))
 
         # 关闭服务器
         smtpobj.quit()
@@ -320,4 +400,4 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, statusText):
         print('出错了T_T')
         print('出错原因是%s' % str(reason))
 
-        statusText.SetLabel('出错原因是%s' % str(reason))
+        self.m_staticText1.SetLabel('出错原因是%s' % str(reason))

@@ -1,9 +1,0 @@
-<xml xmlns:o="urn:schemas-microsoft-com:office:office">
- <o:MainFile href="../测试表模板.htm"/>
- <o:File href="stylesheet.css"/>
- <o:File href="filelist.xml"/>
- <o:File href="tabstrip.htm"/>
- <o:File href="js.js"/>
- <o:File href="sheet001.htm"/>
- <o:File href="sheet002.htm"/>
-</xml>

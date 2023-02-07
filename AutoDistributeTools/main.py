@@ -10,4 +10,4 @@ if __name__ == '__main__':
     app.MainLoop()
  
 
- # pyinstaller -F -w -i logo.ico  email2.py
+ # pyinstaller -F -w -i logo.ico  main.py

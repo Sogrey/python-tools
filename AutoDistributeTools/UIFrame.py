@@ -77,6 +77,9 @@ EmailSubject={}工资条
 
         self.m_textCtrl7.SetValue(config_ini.get("Email", "EmailSubject"))
 
+        self.log_window = wx.LogWindow(self, 'Log Window',show=False)
+
+
     def m_spinCtrl1OnSpinCtrlText( self, event ):
         lineNum = self.m_spinCtrl1.GetValue()
         self.m_staticText101.SetLabel("即从第{}行起读数据".format(lineNum+1))
@@ -338,6 +341,7 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
         total = len(Comprehensive_data)
 
         self.m_gauge1.SetRange(total)
+        self.log_window.Show()        
 
         for key in Comprehensive_data.keys():
 
@@ -383,21 +387,31 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
                 # 发送邮件
                 smtpobj.sendmail(from_addr, to_addr, msg.as_string()) 
                 print("邮件发送成功")
-                self.m_staticText1.SetLabel('分发到 %s (%s) 成功' % (str(to_name),str(to_addr)))
+
+                status = '分发到 %s (%s) 成功' % (str(to_name),str(to_addr))
+                self.m_staticText1.SetLabel(status)
+                wx.LogStatus(status)
 
                 count = count+1
                 self.m_gauge1.SetValue(count)
 
             except smtplib.SMTPException as reason:
                 print("无法发送邮件")
-                self.m_staticText1.SetLabel('无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason)))
+
+                status = '无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason))
+                self.m_staticText1.SetLabel(status)
+                wx.LogStatus(status)
 
         # 关闭服务器
         smtpobj.quit()
+        wx.LogStatus('分发执行完成。')
 
     except OSError as reason:
 
         print('出错了T_T')
         print('出错原因是%s' % str(reason))
 
-        self.m_staticText1.SetLabel('出错原因是%s' % str(reason))
+        status = '出错原因是%s' % str(reason)
+
+        self.m_staticText1.SetLabel(status)
+        wx.LogStatus(status)

@@ -316,8 +316,8 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
                 <td >个人0.3%</td>
                 <td >单位0.7%</td>
                 <td >单位0.2%</td>
-                <td >0.20<span style="mso-spacerun:yes;">&nbsp;</span></td>
-                <td >0.80<span style="mso-spacerun:yes;">&nbsp;</span></td>
+                <td >个人0.20%</td>
+                <td >单位0.80%</td>
                 <td >个人5%</td>
                 <td >单位5%</td>
             </tr>
@@ -404,7 +404,10 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
 
         # 关闭服务器
         smtpobj.quit()
-        wx.LogStatus('分发执行完成。')
+
+        status = '分发执行完成。'
+        self.m_staticText1.SetLabel(status)
+        wx.LogStatus(status)
 
     except OSError as reason:
 

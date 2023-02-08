@@ -18,7 +18,7 @@ VSVersionInfo(
             [StringStruct(u'CompanyName', u'Sogrey'), # 鼠标悬浮exe会显示
             StringStruct(u'FileDescription', u'工资条分发程序'),    # 文件说明，鼠标悬浮exe会显示，也会显示在 详细信息-文件说明
             StringStruct(u'FileVersion', u'1.1.0'), # 没见哪里显示
-            StringStruct(u'InternalName', u'SVN'),
+            StringStruct(u'InternalName', u'main'),
             StringStruct(u'LegalCopyright', u'开源程序'), #版权，会显示在 详细信息-版权
             StringStruct(u'OriginalFilename', u'Main'), #原始文件名，会显示在 详细信息-原始文件名
             StringStruct(u'ProductName', u'工资条分发程序'),      #产品名称，会显示在 详细信息-产品名称

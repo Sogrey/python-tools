@@ -10,4 +10,4 @@ if __name__ == '__main__':
     app.MainLoop()
  
 
- # pyinstaller -F -w -i logo.ico  main.py
+ # pyinstaller -F -w -i logo.ico --version-file=version.txt -n Setup  main.py

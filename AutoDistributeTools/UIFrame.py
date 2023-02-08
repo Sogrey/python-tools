@@ -17,7 +17,7 @@ from email.header import Header
 
 from configparser import ConfigParser
 
-version = '1.0.2'
+version = '1.0.4'
 
 class UiFrame(MyFrame1):
     def __init__(self, parent):
@@ -55,8 +55,8 @@ JiXiaoSheetHeaderLineNum=2
 GongZiSheetHeaderLineNum=3
 
 [Email]
-EmailSubject={}工资条
-            '''.format(year_month))
+EmailSubject=工资条
+            ''')
             config_ini.close()
 
         # 读取上次配置
@@ -75,7 +75,7 @@ EmailSubject={}工资条
         self.m_spinCtrl1.SetValue(config_ini.get("Excel", "JiXiaoSheetHeaderLineNum"))
         self.m_spinCtrl2.SetValue(config_ini.get("Excel", "GongZiSheetHeaderLineNum"))
 
-        self.m_textCtrl7.SetValue(config_ini.get("Email", "EmailSubject"))
+        self.m_textCtrl7.SetValue("{} {}".format(year_month, config_ini.get("Email", "EmailSubject")))
 
         self.log_window = wx.LogWindow(self, 'Log Window',show=False)
 
@@ -88,9 +88,23 @@ EmailSubject={}工资条
         lineNum = self.m_spinCtrl2.GetValue()
         self.m_staticText11.SetLabel("即从第{}行起读数据".format(lineNum+1))
 
+    def m_textCtrl6OnText( self, event ):
+        current_path = os.getcwd()
+        configPath= current_path + '/' + 'config.ini'        
+        year_month = self.m_textCtrl6.GetValue()
+        
+        if os.path.exists(configPath): 
+            # 读取上次配置
+            config_ini = ConfigParser()
+            config_ini.read(configPath, encoding='utf-8')
+            self.m_textCtrl7.SetValue("{} {}".format(year_month, config_ini.get("Email", "EmailSubject")))
+
     def m_menuItem1OnMenuSelection( self, event ):
         wx.MessageBox('当前版本：'+version, '帮助',
             wx.OK | wx.ICON_INFORMATION)
+
+    def m_menuItem2OnMenuSelection( self, event ):
+        self.log_window.Show()
 
     # 整理数据
     def OnStartDistributeEvent(self, event):
@@ -341,7 +355,9 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
         total = len(Comprehensive_data)
 
         self.m_gauge1.SetRange(total)
-        self.log_window.Show()        
+        self.log_window.Show()
+        log = '开始分发...'
+        recordLog(self, log)      
 
         for key in Comprehensive_data.keys():
 
@@ -388,9 +404,8 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
                 smtpobj.sendmail(from_addr, to_addr, msg.as_string()) 
                 print("邮件发送成功")
 
-                status = '分发到 %s (%s) 成功' % (str(to_name),str(to_addr))
-                self.m_staticText1.SetLabel(status)
-                wx.LogStatus(status)
+                log = '分发到 %s (%s) 成功' % (str(to_name),str(to_addr))
+                recordLog(self, log)
 
                 count = count+1
                 self.m_gauge1.SetValue(count)
@@ -398,23 +413,26 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
             except smtplib.SMTPException as reason:
                 print("无法发送邮件")
 
-                status = '无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason))
-                self.m_staticText1.SetLabel(status)
-                wx.LogStatus(status)
+                log = '无法发送邮件 %s (%s) ,原因是：%s' % (str(to_name),str(to_addr),str(reason))
+                recordLog(self, log)
 
         # 关闭服务器
         smtpobj.quit()
 
-        status = '分发执行完成。'
-        self.m_staticText1.SetLabel(status)
-        wx.LogStatus(status)
+        log = '分发执行完成。'
+        recordLog(self, log)
 
     except OSError as reason:
 
         print('出错了T_T')
         print('出错原因是%s' % str(reason))
 
-        status = '出错原因是%s' % str(reason)
+        log = '出错原因是%s' % str(reason)
+        recordLog(self, log)
 
-        self.m_staticText1.SetLabel(status)
-        wx.LogStatus(status)
+# 分发数据
+def recordLog(self, log):
+
+    self.m_staticText1.SetLabel(log)
+    wx.LogStatus(log)
+

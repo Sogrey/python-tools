@@ -150,16 +150,6 @@ class MyFrame1 ( wx.Frame ):
 		fgSizer4.SetFlexibleDirection( wx.BOTH )
 		fgSizer4.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u"邮件标题", wx.DefaultPosition, wx.DefaultSize, 0 )
-		self.m_staticText10.Wrap( -1 )
-
-		self.m_staticText10.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_CAPTIONTEXT ) )
-
-		fgSizer4.Add( self.m_staticText10, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-
-		self.m_textCtrl7 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
-		fgSizer4.Add( self.m_textCtrl7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
-
 		self.m_staticText12 = wx.StaticText( self, wx.ID_ANY, u"月份", wx.DefaultPosition, wx.DefaultSize, 0 )
 		self.m_staticText12.Wrap( -1 )
 
@@ -169,6 +159,16 @@ class MyFrame1 ( wx.Frame ):
 
 		self.m_textCtrl6 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
 		fgSizer4.Add( self.m_textCtrl6, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+
+		self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, u"邮件标题", wx.DefaultPosition, wx.DefaultSize, 0 )
+		self.m_staticText10.Wrap( -1 )
+
+		self.m_staticText10.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_CAPTIONTEXT ) )
+
+		fgSizer4.Add( self.m_staticText10, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
+
+		self.m_textCtrl7 = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 180,-1 ), 0 )
+		fgSizer4.Add( self.m_textCtrl7, 0, wx.ALL|wx.ALIGN_CENTER_VERTICAL, 5 )
 
 
 		bSizer1.Add( fgSizer4, 1, wx.EXPAND, 5 )
@@ -200,6 +200,11 @@ class MyFrame1 ( wx.Frame ):
 		self.m_menuItem1 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"帮助", wx.EmptyString, wx.ITEM_NORMAL )
 		self.m_menu1.Append( self.m_menuItem1 )
 
+		self.m_menu1.AppendSeparator()
+
+		self.m_menuItem2 = wx.MenuItem( self.m_menu1, wx.ID_ANY, u"日志", wx.EmptyString, wx.ITEM_NORMAL )
+		self.m_menu1.Append( self.m_menuItem2 )
+
 		self.m_menubar1.Append( self.m_menu1, u"关于" )
 
 		self.SetMenuBar( self.m_menubar1 )
@@ -210,8 +215,10 @@ class MyFrame1 ( wx.Frame ):
 		# Connect Events
 		self.m_spinCtrl1.Bind( wx.EVT_TEXT, self.m_spinCtrl1OnSpinCtrlText )
 		self.m_spinCtrl2.Bind( wx.EVT_TEXT, self.m_spinCtrl2OnSpinCtrlText )
+		self.m_textCtrl6.Bind( wx.EVT_TEXT, self.m_textCtrl6OnText )
 		self.m_button3.Bind( wx.EVT_BUTTON, self.OnStartDistributeEvent )
 		self.Bind( wx.EVT_MENU, self.m_menuItem1OnMenuSelection, id = self.m_menuItem1.GetId() )
+		self.Bind( wx.EVT_MENU, self.m_menuItem2OnMenuSelection, id = self.m_menuItem2.GetId() )
 
 	def __del__( self ):
 		pass
@@ -224,10 +231,16 @@ class MyFrame1 ( wx.Frame ):
 	def m_spinCtrl2OnSpinCtrlText( self, event ):
 		event.Skip()
 
+	def m_textCtrl6OnText( self, event ):
+		event.Skip()
+
 	def OnStartDistributeEvent( self, event ):
 		event.Skip()
 
 	def m_menuItem1OnMenuSelection( self, event ):
+		event.Skip()
+
+	def m_menuItem2OnMenuSelection( self, event ):
 		event.Skip()
 
 

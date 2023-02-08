@@ -75,7 +75,7 @@ EmailSubject=工资条
         self.m_spinCtrl1.SetValue(config_ini.get("Excel", "JiXiaoSheetHeaderLineNum"))
         self.m_spinCtrl2.SetValue(config_ini.get("Excel", "GongZiSheetHeaderLineNum"))
 
-        self.m_textCtrl7.SetValue("{} {}".format(year_month, config_ini.get("Email", "EmailSubject")))
+        self.m_textCtrl7.SetValue(config_ini.get("Email", "EmailSubject"))
 
         self.log_window = wx.LogWindow(self, 'Log Window',show=False)
 
@@ -87,17 +87,6 @@ EmailSubject=工资条
     def m_spinCtrl2OnSpinCtrlText( self, event ):
         lineNum = self.m_spinCtrl2.GetValue()
         self.m_staticText11.SetLabel("即从第{}行起读数据".format(lineNum+1))
-
-    def m_textCtrl6OnText( self, event ):
-        current_path = os.getcwd()
-        configPath= current_path + '/' + 'config.ini'        
-        year_month = self.m_textCtrl6.GetValue()
-        
-        if os.path.exists(configPath): 
-            # 读取上次配置
-            config_ini = ConfigParser()
-            config_ini.read(configPath, encoding='utf-8')
-            self.m_textCtrl7.SetValue("{} {}".format(year_month, config_ini.get("Email", "EmailSubject")))
 
     def m_menuItem1OnMenuSelection( self, event ):
         wx.MessageBox('当前版本：'+version, '帮助',
@@ -243,6 +232,8 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
 
     try:
 
+        self.log_window.Show()
+
         # 发信服务器
         smtp_server = 'smtp.qq.com'
 
@@ -351,11 +342,13 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
         # 登录--发送者账号和口令
         smtpobj.login(from_addr, password)  
 
+        subject = "{} {}".format(date,subject)
+
         count = 0
         total = len(Comprehensive_data)
 
         self.m_gauge1.SetRange(total)
-        self.log_window.Show()
+        
         log = '开始分发...'
         recordLog(self, log)      
 

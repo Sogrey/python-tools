@@ -215,7 +215,6 @@ class MyFrame1 ( wx.Frame ):
 		# Connect Events
 		self.m_spinCtrl1.Bind( wx.EVT_TEXT, self.m_spinCtrl1OnSpinCtrlText )
 		self.m_spinCtrl2.Bind( wx.EVT_TEXT, self.m_spinCtrl2OnSpinCtrlText )
-		self.m_textCtrl6.Bind( wx.EVT_TEXT, self.m_textCtrl6OnText )
 		self.m_button3.Bind( wx.EVT_BUTTON, self.OnStartDistributeEvent )
 		self.Bind( wx.EVT_MENU, self.m_menuItem1OnMenuSelection, id = self.m_menuItem1.GetId() )
 		self.Bind( wx.EVT_MENU, self.m_menuItem2OnMenuSelection, id = self.m_menuItem2.GetId() )
@@ -229,9 +228,6 @@ class MyFrame1 ( wx.Frame ):
 		event.Skip()
 
 	def m_spinCtrl2OnSpinCtrlText( self, event ):
-		event.Skip()
-
-	def m_textCtrl6OnText( self, event ):
 		event.Skip()
 
 	def OnStartDistributeEvent( self, event ):

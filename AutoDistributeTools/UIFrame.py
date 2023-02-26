@@ -17,7 +17,7 @@ from email.header import Header
 
 from configparser import ConfigParser
 
-version = '1.0.4'
+version = '1.0.5'
 
 class UiFrame(MyFrame1):
     def __init__(self, parent):
@@ -115,59 +115,65 @@ EmailSubject=工资条
             wb = load_workbook(excelPath, read_only=True, data_only=True)
 
             # 获取绩效表和工资表Sheet名称
-            JXSheetLabel = self.m_textCtrl3.GetValue()
-            GZSheetLabel = self.m_textCtrl4.GetValue()
+            JXSheetLabel = self.m_textCtrl3.GetValue().strip()
+            GZSheetLabel = self.m_textCtrl4.GetValue().strip()
 
             JXSheetHeaderLineNum = self.m_spinCtrl1.GetValue()
             GZSheetHeaderLineNum = self.m_spinCtrl2.GetValue()
 
-            # 获取绩效工作簿
-            ws_JX = wb[JXSheetLabel]
+            hasJX = JXSheetLabel != ''
+            hasGZ = GZSheetLabel != ''
 
             # 绩效数据
             JX_datas = {}
-
-            lineNum = 0
-            colStart = 3
-            colEnd = 10
-            for row in ws_JX.rows:  # 获取每一行的数据
-                if lineNum < int(JXSheetHeaderLineNum):
-                    lineNum = lineNum+1
-                    continue
-
-                jx = []
-
-                for index in range(colStart, colEnd, 1):
-                    jx.append(row[index].value)
-
-                JX_datas[row[3].value+row[9].value] = jx  # key: 名字+Email
-
-            print('绩效表数据')
-            print(JX_datas)
-
-            # 获取薪资工作簿
-            ws_GZ = wb[GZSheetLabel]
-
             # 工资数据
             GZ_datas = {}
 
-            lineNum = 0
-            colStart = 0
-            colEnd = 47
-            for row in ws_GZ.rows:  # 获取每一行的数据
-                if lineNum < int(GZSheetHeaderLineNum):
-                    lineNum = lineNum+1
-                    continue
+            if hasJX:
 
-                gz = []
+                # 获取绩效工作簿
+                ws_JX = wb[JXSheetLabel]
 
-                for index in range(colStart, colEnd, 1):
-                    gz.append(row[index].value)
+                lineNum = 0
+                colStart = 3
+                colEnd = 10
+                for row in ws_JX.rows:  # 获取每一行的数据
+                    if lineNum < int(JXSheetHeaderLineNum):
+                        lineNum = lineNum+1
+                        continue
 
-                GZ_datas[row[2].value+row[46].value] = gz # key: 名字+Email
+                    jx = []
 
-            print('工资表数据')
-            print(GZ_datas)
+                    for index in range(colStart, colEnd, 1):
+                        jx.append(row[index].value)
+
+                    JX_datas[row[3].value+row[9].value] = jx  # key: 名字+Email
+
+                print('绩效表数据')
+                print(JX_datas)
+
+            if hasGZ:
+
+                # 获取薪资工作簿
+                ws_GZ = wb[GZSheetLabel]
+
+                lineNum = 0
+                colStart = 0
+                colEnd = 47
+                for row in ws_GZ.rows:  # 获取每一行的数据
+                    if lineNum < int(GZSheetHeaderLineNum):
+                        lineNum = lineNum+1
+                        continue
+
+                    gz = []
+
+                    for index in range(colStart, colEnd, 1):
+                        gz.append(row[index].value)
+
+                    GZ_datas[row[2].value+row[46].value] = gz # key: 名字+Email
+
+                print('工资表数据')
+                print(GZ_datas)
 
             Comprehensive_data = {}
 
@@ -181,19 +187,33 @@ EmailSubject=工资条
             print(keys_jx)
             print(keys_gz)
 
-            chaJi = list(set(keys_gz)-set(keys_jx))
-            print(chaJi)
-            
-            for key in keys_jx:
-                if key in keys_gz:
-                    Comprehensive_data[key] = [JX_datas[key][0],JX_datas[key][6],JX_datas[key],GZ_datas[key]]
-                else:
+            # 如果工资表和绩效表同时存在
+            if hasJX and hasGZ :
+
+                chaJi = list(set(keys_gz)-set(keys_jx))
+                print(chaJi)
+                
+                for key in keys_jx:
+                    if key in keys_gz:
+                        Comprehensive_data[key] = [JX_datas[key][0],JX_datas[key][6],JX_datas[key],GZ_datas[key]]
+                    else:
+                        Comprehensive_data[key] = [JX_datas[key][0],JX_datas[key][6],JX_datas[key],[]]
+
+                for key in chaJi:
+                    Comprehensive_data[key] = [GZ_datas[key][2],GZ_datas[key][46],[],GZ_datas[key]]
+
+                print(Comprehensive_data)
+
+            # 仅绩效表
+            elif hasJX:
+                for key in keys_jx:
                     Comprehensive_data[key] = [JX_datas[key][0],JX_datas[key][6],JX_datas[key],[]]
-
-            for key in chaJi:
-                Comprehensive_data[key] = [GZ_datas[key][2],GZ_datas[key][46],[],GZ_datas[key]]
-
-            print(Comprehensive_data)
+                pass
+            # 仅工资表
+            elif hasGZ:
+                for key in keys_gz:
+                    Comprehensive_data[key] = [GZ_datas[key][2],GZ_datas[key][46],[],GZ_datas[key]]
+                pass
 
             # 分发数据
 
@@ -334,6 +354,106 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
         以上数据如有疑问，请及时反馈！
         """
 
+        textJX="""
+        {name}，你好：<br />
+        &emsp;&emsp;以下是{date}绩效考核组成，请查收！<br />
+
+        <div class="scrolling-wrapper">
+        <table class="">
+            <caption>{JX_Table_Header}</caption>
+            <tr>
+            <td>姓名</td>
+            <td>考核基数</td>
+            <td>工作时间投入度</td>
+            <td>产出质量</td>
+            <td>按期交付能力</td>
+            <td>加权累计%</td>
+            </tr>
+            <tr>
+            {JX_Table_Datas}
+            </tr>
+        </table>
+        </div>
+        以上数据如有疑问，请及时反馈！
+        """
+
+        textGZ="""
+        {name}，你好：<br />
+        &emsp;&emsp;以下是{date}薪资组成，请查收！<br />
+
+        <div class="scrolling-wrapper">
+        <table class="">
+            <caption>{GZ_Table_Header}</caption>
+            <tr style="mso-height-source:userset;">
+                <td rowspan="3">部门</td>
+                <td rowspan="3">序号</td>
+                <td rowspan="3">姓名</td>
+                <td rowspan="3">出勤天数</td>
+                <td rowspan="3">缺勤天数</td>
+                <td rowspan="3">基本工资</td>
+                <td rowspan="3">基本绩效</td>
+                <td rowspan="3">绩效奖金</td>
+                <td rowspan="3">缺勤扣工资</td>
+                <td colspan="5">补助</td>
+                <td rowspan="3">其他扣款</td>
+                <td rowspan="3">应发工资</td>
+                <td colspan="16">社保及公积金</td>
+                <td rowspan="3">应税工资</td>
+                <td colspan="8">专项扣除</td>
+                <td rowspan="3">累计应缴预缴所得额</td>
+                <td rowspan="3">累计税额</td>
+                <td rowspan="3">本月应扣缴税额</td>
+                <td rowspan="3">实发工资</td>
+                <td rowspan="3">冲销后实发</td>
+                <td rowspan="3">Email</td>
+            </tr>
+            <tr style="mso-height-source:userset;">
+                <td rowspan="2">午餐补助</td>
+                <td rowspan="2">其他各项补助</td>
+                <td rowspan="2">社保及其他补助</td>
+                <td rowspan="2">设备补助</td>
+                <td rowspan="2">出差补助（加班、提成）</td>
+                <td rowspan="2">养老保险基数</td>
+                <td colspan="2">养老</td>
+                <td rowspan="2">医疗基数</td>
+                <td colspan="2">医疗</td>
+                <td colspan="2">失业</td>
+                <td >工伤</td>
+                <td colspan="2">大病</td>
+                <td rowspan="2">公积金基数</td>
+                <td colspan="2">公积金</td>
+                <td rowspan="2">个人合计</td>
+                <td rowspan="2">公司合计</td>
+                <td rowspan="2">子女教育</td>
+                <td rowspan="2">赡养老人</td>
+                <td rowspan="2">住房贷款</td>
+                <td rowspan="2">房租费用</td>
+                <td rowspan="2">继续教育</td>
+                <td rowspan="2">大病医疗</td>
+                <td rowspan="2">婴幼儿照护费用</td>
+                <td rowspan="2">小计</td>
+            </tr>
+            <tr style="mso-height-source:userset;">
+                <td >个人8%</td>
+                <td >单位16%</td>
+                <td >个人2%</td>
+                <td >单位8%</td>
+                <td >个人0.3%</td>
+                <td >单位0.7%</td>
+                <td >单位0.2%</td>
+                <td >个人0.20%</td>
+                <td >单位0.80%</td>
+                <td >个人5%</td>
+                <td >单位5%</td>
+            </tr>
+            <tr>
+            {GZ_Table_Datas}
+            </tr>
+        </table>
+        </div>
+        以上数据如有疑问，请及时反馈！
+        """
+
         date = self.m_textCtrl6.GetValue()
 
         smtpobj = smtplib.SMTP_SSL(smtp_server)
@@ -369,20 +489,39 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
 
             gz_text = "".join(gz_text_array)
 
-            content = text.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
-            <td>{}</td>
-            <td>{}</td>
-            <td>{}</td>
-            <td>{}</td>
-            <td>{}</td>
-            <td>{}</td>
-            """.format(jx[0],
-            str('%.2f' % (float(jx[1])*100))+'%',
-            str('%.2f' % (float(jx[2])*100))+'%',
-            str('%.2f' % (float(jx[3])*100))+'%',
-            str('%.2f' % (float(jx[4])*100))+'%',
-            str('%.2f' % (float(jx[5])*100))+'%'),
-            GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
+            content = ''
+            if len(jx)>0 and len(gz)>0:
+                content = text.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                """.format(jx[0],
+                str('%.2f' % (float(jx[1])*100))+'%',
+                str('%.2f' % (float(jx[2])*100))+'%',
+                str('%.2f' % (float(jx[3])*100))+'%',
+                str('%.2f' % (float(jx[4])*100))+'%',
+                str('%.2f' % (float(jx[5])*100))+'%'),
+                GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
+            elif len(jx)>0:
+                content = textJX.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                <td>{}</td>
+                """.format(jx[0],
+                str('%.2f' % (float(jx[1])*100))+'%',
+                str('%.2f' % (float(jx[2])*100))+'%',
+                str('%.2f' % (float(jx[3])*100))+'%',
+                str('%.2f' % (float(jx[4])*100))+'%',
+                str('%.2f' % (float(jx[5])*100))+'%'))
+            elif len(gz)>0:
+                content = textGZ.format(name = to_name,date = date,
+                GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
 
             msg = MIMEText(css+content, 'html', 'utf-8')
 

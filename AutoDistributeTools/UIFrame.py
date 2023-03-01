@@ -17,7 +17,7 @@ from email.header import Header
 
 from configparser import ConfigParser
 
-version = '1.0.5'
+version = '1.0.6'
 
 class UiFrame(MyFrame1):
     def __init__(self, parent):
@@ -259,199 +259,200 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
 
         # 邮箱正文内容，第一个参数为内容，第二个参数为格式(plain 为纯文本)，第三个参数为编码
 
-        css = '<style>.scrolling-wrapper{overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;}table{border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;}table caption{background-color:#323232;padding:7px;font-size:21px;}table td,th{padding:5px;text-align:center;border:1px solid #70aefb;vertical-align:middle;font-size:15px;white-space: nowrap !important;}</style>'
-
         text="""
         {name}，你好：<br />
-        &emsp;&emsp;以下是{date}绩效考核及薪资组成，请查收！<br />
+        &emsp;&emsp;以下是您{date}绩效考核及薪资明细，请查收！<br />
 
-        <div class="scrolling-wrapper">
-        <table class="">
-            <caption>{JX_Table_Header}</caption>
+        <div class="scrolling-wrapper" style="overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;">
+        <table class="" style="border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;">
+            <caption style="background-color:#323232;padding:7px;font-size:21px;">{JX_Table_Header}</caption>
             <tr>
-            <td>姓名</td>
-            <td>考核基数</td>
-            <td>工作时间投入度</td>
-            <td>产出质量</td>
-            <td>按期交付能力</td>
-            <td>加权累计%</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>姓名</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>考核基数</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>工作时间投入度</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>产出质量</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>按期交付能力</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>加权累计%</td>
             </tr>
             <tr>
             {JX_Table_Datas}
             </tr>
         </table>
         </div>
-        <div class="scrolling-wrapper">
-        <table class="">
-            <caption>{GZ_Table_Header}</caption>
+        <div class="scrolling-wrapper" style="overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;">
+        <table class="" style="border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;">
+            <caption style="background-color:#323232;padding:7px;font-size:21px;">{GZ_Table_Header}</caption>
             <tr style="mso-height-source:userset;">
-                <td rowspan="3">部门</td>
-                <td rowspan="3">序号</td>
-                <td rowspan="3">姓名</td>
-                <td rowspan="3">出勤天数</td>
-                <td rowspan="3">缺勤天数</td>
-                <td rowspan="3">基本工资</td>
-                <td rowspan="3">基本绩效</td>
-                <td rowspan="3">绩效奖金</td>
-                <td rowspan="3">缺勤扣工资</td>
-                <td colspan="5">补助</td>
-                <td rowspan="3">其他扣款</td>
-                <td rowspan="3">应发工资</td>
-                <td colspan="16">社保及公积金</td>
-                <td rowspan="3">应税工资</td>
-                <td colspan="8">专项扣除</td>
-                <td rowspan="3">累计应缴预缴所得额</td>
-                <td rowspan="3">累计税额</td>
-                <td rowspan="3">本月应扣缴税额</td>
-                <td rowspan="3">实发工资</td>
-                <td rowspan="3">冲销后实发</td>
-                <td rowspan="3">Email</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">部门</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">序号</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">姓名</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">出勤天数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">缺勤天数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">基本工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">基本绩效</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">绩效奖金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">缺勤扣工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="5">补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">其他扣款</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">应发工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="16">社保及公积金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">应税工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="8">专项扣除</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">累计应缴预缴所得额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">累计税额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">本月应扣缴税额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">实发工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">冲销后实发</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">Email</td>
             </tr>
             <tr style="mso-height-source:userset;">
-                <td rowspan="2">午餐补助</td>
-                <td rowspan="2">其他各项补助</td>
-                <td rowspan="2">社保及其他补助</td>
-                <td rowspan="2">设备补助</td>
-                <td rowspan="2">出差补助（加班、提成）</td>
-                <td rowspan="2">养老保险基数</td>
-                <td colspan="2">养老</td>
-                <td rowspan="2">医疗基数</td>
-                <td colspan="2">医疗</td>
-                <td colspan="2">失业</td>
-                <td >工伤</td>
-                <td colspan="2">大病</td>
-                <td rowspan="2">公积金基数</td>
-                <td colspan="2">公积金</td>
-                <td rowspan="2">个人合计</td>
-                <td rowspan="2">公司合计</td>
-                <td rowspan="2">子女教育</td>
-                <td rowspan="2">赡养老人</td>
-                <td rowspan="2">住房贷款</td>
-                <td rowspan="2">房租费用</td>
-                <td rowspan="2">继续教育</td>
-                <td rowspan="2">大病医疗</td>
-                <td rowspan="2">婴幼儿照护费用</td>
-                <td rowspan="2">小计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">午餐补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">其他各项补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">社保及其他补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">设备补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">出差补助（加班、提成）</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">养老保险基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">养老</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">医疗基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">医疗</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">失业</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >工伤</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">大病</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">公积金基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">公积金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">个人合计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">公司合计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">子女教育</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">赡养老人</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">住房贷款</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">房租费用</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">继续教育</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">大病医疗</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">婴幼儿照护费用</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">小计</td>
             </tr>
             <tr style="mso-height-source:userset;">
-                <td >个人8%</td>
-                <td >单位16%</td>
-                <td >个人2%</td>
-                <td >单位8%</td>
-                <td >个人0.3%</td>
-                <td >单位0.7%</td>
-                <td >单位0.2%</td>
-                <td >个人0.20%</td>
-                <td >单位0.80%</td>
-                <td >个人5%</td>
-                <td >单位5%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >个人8%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位16%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >个人2%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位8%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >个人0.3%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位0.7%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位0.2%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >个人0.20%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位0.80%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >个人5%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >单位5%</td>
             </tr>
             <tr>
             {GZ_Table_Datas}
             </tr>
         </table>
         </div>
-        以上数据如有疑问，请及时反馈！
+        祝好！<br/>
+        仅供员工本人浏览
         """
 
         textJX="""
         {name}，你好：<br />
-        &emsp;&emsp;以下是{date}绩效考核组成，请查收！<br />
+        &emsp;&emsp;以下是您{date}绩效考核组成，请查收：<br />
 
-        <div class="scrolling-wrapper">
-        <table class="">
-            <caption>{JX_Table_Header}</caption>
+        <div class="scrolling-wrapper" style="overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;">
+        <table class="" style="border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;">
+            <caption style="background-color:#323232;padding:7px;font-size:21px;">{JX_Table_Header}</caption>
             <tr>
-            <td>姓名</td>
-            <td>考核基数</td>
-            <td>工作时间投入度</td>
-            <td>产出质量</td>
-            <td>按期交付能力</td>
-            <td>加权累计%</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>姓名</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>考核基数</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>工作时间投入度</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>产出质量</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>按期交付能力</td>
+            <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>加权累计%</td>
             </tr>
             <tr>
             {JX_Table_Datas}
             </tr>
         </table>
         </div>
-        以上数据如有疑问，请及时反馈！
+        祝好！<br/>
+        仅供员工本人浏览
         """
 
         textGZ="""
         {name}，你好：<br />
-        &emsp;&emsp;以下是{date}薪资组成，请查收！<br />
+        &emsp;&emsp;以下是您{date}薪资明细，请查收！<br />
 
-        <div class="scrolling-wrapper">
-        <table class="">
-            <caption>{GZ_Table_Header}</caption>
+        <div class="scrolling-wrapper" style="overflow-x:scroll;overflow-y:hidden;white-space:nowrap;padding:20px;">
+        <table class="" style="border-collapse:collapse;table-layout:fixed;border-radius:5px;overflow:hidden;margin:10px 5px;border:2px solid #70aefb;background-color:#328ef4;color:#c7dafb;box-shadow:10px 10px 10px #000;">
+            <caption style="background-color:#323232;padding:7px;font-size:21px;">{GZ_Table_Header}</caption>
             <tr style="mso-height-source:userset;">
-                <td rowspan="3">部门</td>
-                <td rowspan="3">序号</td>
-                <td rowspan="3">姓名</td>
-                <td rowspan="3">出勤天数</td>
-                <td rowspan="3">缺勤天数</td>
-                <td rowspan="3">基本工资</td>
-                <td rowspan="3">基本绩效</td>
-                <td rowspan="3">绩效奖金</td>
-                <td rowspan="3">缺勤扣工资</td>
-                <td colspan="5">补助</td>
-                <td rowspan="3">其他扣款</td>
-                <td rowspan="3">应发工资</td>
-                <td colspan="16">社保及公积金</td>
-                <td rowspan="3">应税工资</td>
-                <td colspan="8">专项扣除</td>
-                <td rowspan="3">累计应缴预缴所得额</td>
-                <td rowspan="3">累计税额</td>
-                <td rowspan="3">本月应扣缴税额</td>
-                <td rowspan="3">实发工资</td>
-                <td rowspan="3">冲销后实发</td>
-                <td rowspan="3">Email</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">部门</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">序号</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">姓名</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">出勤天数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">缺勤天数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">基本工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">基本绩效</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">绩效奖金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">缺勤扣工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="5">补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">其他扣款</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">应发工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="16">社保及公积金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">应税工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="8">专项扣除</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">累计应缴预缴所得额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">累计税额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">本月应扣缴税额</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">实发工资</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">冲销后实发</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="3">Email</td>
             </tr>
             <tr style="mso-height-source:userset;">
-                <td rowspan="2">午餐补助</td>
-                <td rowspan="2">其他各项补助</td>
-                <td rowspan="2">社保及其他补助</td>
-                <td rowspan="2">设备补助</td>
-                <td rowspan="2">出差补助（加班、提成）</td>
-                <td rowspan="2">养老保险基数</td>
-                <td colspan="2">养老</td>
-                <td rowspan="2">医疗基数</td>
-                <td colspan="2">医疗</td>
-                <td colspan="2">失业</td>
-                <td >工伤</td>
-                <td colspan="2">大病</td>
-                <td rowspan="2">公积金基数</td>
-                <td colspan="2">公积金</td>
-                <td rowspan="2">个人合计</td>
-                <td rowspan="2">公司合计</td>
-                <td rowspan="2">子女教育</td>
-                <td rowspan="2">赡养老人</td>
-                <td rowspan="2">住房贷款</td>
-                <td rowspan="2">房租费用</td>
-                <td rowspan="2">继续教育</td>
-                <td rowspan="2">大病医疗</td>
-                <td rowspan="2">婴幼儿照护费用</td>
-                <td rowspan="2">小计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">午餐补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">其他各项补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">社保及其他补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">设备补助</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">出差补助（加班、提成）</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">养老保险基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">养老</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">医疗基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">医疗</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">失业</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' >工伤</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">大病</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">公积金基数</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' colspan="2">公积金</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">个人合计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">公司合计</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">子女教育</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">赡养老人</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">住房贷款</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">房租费用</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">继续教育</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">大病医疗</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">婴幼儿照护费用</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;' rowspan="2">小计</td>
             </tr>
             <tr style="mso-height-source:userset;">
-                <td >个人8%</td>
-                <td >单位16%</td>
-                <td >个人2%</td>
-                <td >单位8%</td>
-                <td >个人0.3%</td>
-                <td >单位0.7%</td>
-                <td >单位0.2%</td>
-                <td >个人0.20%</td>
-                <td >单位0.80%</td>
-                <td >个人5%</td>
-                <td >单位5%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>个人8%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位16%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>个人2%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位8%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>个人0.3%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位0.7%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位0.2%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>个人0.20%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位0.80%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>个人5%</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>单位5%</td>
             </tr>
             <tr>
             {GZ_Table_Datas}
             </tr>
         </table>
         </div>
-        以上数据如有疑问，请及时反馈！
+        祝好！<br/>
+        仅供员工本人浏览
         """
 
         date = self.m_textCtrl6.GetValue()
@@ -485,19 +486,19 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
             gz_text_array = []
 
             for item in gz:
-                gz_text_array.append("<td>{}</td>".format(item))
+                gz_text_array.append("<td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>".format(item))
 
             gz_text = "".join(gz_text_array)
 
             content = ''
             if len(jx)>0 and len(gz)>0:
                 content = text.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
                 """.format(jx[0],
                 str('%.2f' % (float(jx[1])*100))+'%',
                 str('%.2f' % (float(jx[2])*100))+'%',
@@ -507,12 +508,12 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
                 GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
             elif len(jx)>0:
                 content = textJX.format(name = to_name,date = date, JX_Table_Header = "{}绩效表".format(date), JX_Table_Datas = """
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
-                <td>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
+                <td style='border:1px solid #70aefb;white-space:nowrap;font-weight:normal;min-width:4em;vertical-align:middle;text-align:center;padding:10px 5px;font-size:15px;'>{}</td>
                 """.format(jx[0],
                 str('%.2f' % (float(jx[1])*100))+'%',
                 str('%.2f' % (float(jx[2])*100))+'%',
@@ -523,7 +524,7 @@ def SendEmail(from_addr, password, subject, Comprehensive_data, self):
                 content = textGZ.format(name = to_name,date = date,
                 GZ_Table_Header = "{}工资表".format(date),GZ_Table_Datas = gz_text)
 
-            msg = MIMEText(css+content, 'html', 'utf-8')
+            msg = MIMEText(content, 'html', 'utf-8')
 
             # 邮件头信息
             msg['From'] = Header(from_addr)  # 发送者
